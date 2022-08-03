@@ -1,0 +1,196 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Size {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  products: [Product!]
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+type Color {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  hexValue: String!
+  products: [Product!]
+}
+
+type Product {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String!
+  price: Float!
+  isActive: Boolean!
+  store: Store
+  sizes: [Size!]
+  colors: [Color!]
+}
+
+type Store {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  name: String!
+  description: String
+  isActive: Boolean!
+  owner: User
+  products: [Product!]
+}
+
+type User {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  firstName: String!
+  lastName: String!
+  phone: String
+  isActive: Boolean!
+  role: UserRole
+  stores: [Store!]
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+}
+
+type Auth {
+  accessToken: String!
+  user: User
+}
+
+type Query {
+  users: [User!]!
+  user(id: Int!): User!
+  colors: [Color!]!
+  sizes: [Size!]!
+  products: [Product!]!
+  stores: [Store!]!
+  store(id: Int!): Store!
+}
+
+type Mutation {
+  login(loginInput: LoginInput!): Auth!
+  signup(signupInput: SignupInput!): Auth!
+  refresh(refreshInput: RefreshInput!): Auth!
+  userCreate(userCreateInput: UserCreateInput!): User!
+  userUpdate(userUpdateInput: UserUpdateInput!): User!
+  userDelete(id: Int!): Boolean!
+  colorCreate(colorCreateInput: ColorCreateInput!): Color!
+  colorUpdate(colorUpdateInput: ColorUpdateInput!): Color!
+  colorDelete(id: Int!): Boolean!
+  sizeCreate(sizeCreateInput: SizeCreateInput!): Size!
+  sizeUpdate(sizeUpdateInput: SizeUpdateInput!): Size!
+  sizeDelete(id: Int!): Boolean!
+  productCreate(productCreateInput: ProductCreateInput!): Product!
+  productUpdate(productUpdateInput: ProductUpdateInput!): Product!
+  productDelete(id: Int!): Boolean!
+  storeCreate(storeCreateInput: StoreCreateInput!): Store!
+  storeUpdate(storeUpdateInput: StoreUpdateInput!): Store!
+  storeDelete(id: Int!): Boolean!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+input SignupInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+input RefreshInput {
+  token: String!
+}
+
+input UserCreateInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  phone: String
+  isActive: Boolean = true
+  role: UserRole
+  password: String!
+}
+
+input UserUpdateInput {
+  email: String
+  firstName: String
+  lastName: String
+  phone: String
+  isActive: Boolean = true
+  role: UserRole
+  password: String
+  id: Float!
+}
+
+input ColorCreateInput {
+  name: String!
+  hexValue: String!
+}
+
+input ColorUpdateInput {
+  name: String
+  hexValue: String
+  id: Float!
+}
+
+input SizeCreateInput {
+  name: String!
+}
+
+input SizeUpdateInput {
+  name: String
+  id: Float!
+}
+
+input ProductCreateInput {
+  name: String!
+  description: String!
+  price: Float!
+  isActive: Boolean = true
+  store: StoreUpdateInput
+  sizes: [SizeUpdateInput!]
+  colors: [ColorUpdateInput!]
+}
+
+input StoreUpdateInput {
+  name: String
+  description: String
+  isActive: Boolean = true
+  owner: UserUpdateInput
+  id: Float!
+}
+
+input ProductUpdateInput {
+  name: String
+  description: String
+  price: Float
+  isActive: Boolean = true
+  store: StoreUpdateInput
+  sizes: [SizeUpdateInput!]
+  colors: [ColorUpdateInput!]
+  id: Float!
+}
+
+input StoreCreateInput {
+  name: String!
+  description: String
+  isActive: Boolean = true
+  owner: UserUpdateInput
+}
